@@ -22,7 +22,6 @@ export default class KadastraiScreen extends React.Component<Props> {
     searchDebounce: any = null;
     searchText: any;
 	componentDidMount= async () => {
-        api.offlinePersistence();
         api.getKadastraiRealtime(this.onUpdateKadastrai)
     }
     onUpdateKadastrai = (kadastrai:FirebaseKadastras[]) => {

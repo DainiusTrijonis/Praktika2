@@ -57,21 +57,11 @@ export type ApiClient = {
     addBarelis(b:Barelis,kadastroId:string, sklypoId:string):  void
     addMedis(m:Medis,kadastroId:string, sklypoId:string, barelioId:string):  void
 
-    offlinePersistence():  void
 }
 
 export const createApiClient = (): ApiClient => {
     return {
-        offlinePersistence: async () => {   
-             await firestore().settings(
-                 {
-                    cacheSizeBytes: firestore.CACHE_SIZE_UNLIMITED,
-                    persistence: true,
-                    ssl: false,
-                    host: 'localhost:8080'
-                 }
-             );
-        },
+
         getSklypaiRealtime: (callback, kadastroId ) => {
             firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai")
                 .onSnapshot((querySnapshot) => {
