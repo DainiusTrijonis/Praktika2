@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "797922138697",
+    "firebase_url": "https://projektasv2.firebaseio.com",
+    "project_id": "projektasv2",
+    "storage_bucket": "projektasv2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797922138697:android:a1c7c6438dd8e531643d98",
+        "android_client_info": {
+          "package_name": "com.praktika"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "797922138697-6m7cdqtui944rrric179sk30k8htef74.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.praktika",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "797922138697-mfmhrf6tugbmu6ha08bk019mhgfdfef5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDY-6y81hBLQMtUfXkENOtFDjXRlE_ex8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "797922138697-mfmhrf6tugbmu6ha08bk019mhgfdfef5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
