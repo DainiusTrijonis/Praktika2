@@ -43,7 +43,7 @@ export default class AddSklypas extends React.Component<Props> {
     onPressAddSklypas = () => {
         if(this.state.sklypas.sklypoNr != '' && this.state.sklypas.plotas != 0) {
             api.addSklypas(this.state.sklypas,this.state.firebaseKadastras.id) 
-            this.props.navigation.navigate("Kadastras",{
+            this.props.navigation.navigate("Sklypai",{
                 firebaseKadastras: this.state.firebaseKadastras
             })
         }
