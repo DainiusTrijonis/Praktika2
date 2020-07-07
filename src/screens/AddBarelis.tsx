@@ -54,7 +54,7 @@ export default class AddBarelis extends React.Component<Props> {
     onPressAddBarelis = () => {
         if(this.state.barelis.barelioNr != '' && this.state.barelis.plotas != 0) {
             api.addBarelis(this.state.barelis,this.state.firebaseKadastras.id, this.state.firebaseSklypas.id) 
-            this.props.navigation.navigate("Sklypas",{
+            this.props.navigation.navigate("Bareliai",{
                 firebaseKadastras: this.state.firebaseKadastras,
                 firebaseSklypas: this.state.firebaseSklypas,
             })

@@ -156,7 +156,7 @@ export const createApiClient = (): ApiClient => {
         addBarelis: (b:Barelis, kadastroId:string, sklypoId:string) => {
             const user = auth().currentUser;
             if (user) {
-                firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').get()
+                firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').where('barelioNr','==',b.barelioNr).get()
                     .then(snapshot =>{
                         var id;
                         snapshot.forEach((doc)=>{
@@ -174,7 +174,7 @@ export const createApiClient = (): ApiClient => {
         addMedis: (m:Medis, kadastroId:string, sklypoId:string, barelioId:string) => {
             const user = auth().currentUser;
             if (user) {
-                firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(barelioId).collection('Medziai').get()
+                firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(barelioId).collection('Medziai').where('medzioNr','==',m.medzioNr).get()
                     .then(snapshot =>{
                         var id;
                         snapshot.forEach((doc)=>{
