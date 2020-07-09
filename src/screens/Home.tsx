@@ -54,7 +54,7 @@ export default class Home extends React.Component<Props> {
                 <SafeAreaView style= {styles.container}>
                     <View style={styles.layout}>
                         <View>
-                            <Text style={{color: 'white'}}> {this.state.user.email} </Text>
+                            <Text> {this.state.user.email} </Text>
                         </View>
                         <TouchableOpacity
                             style={styles.button}
@@ -81,11 +81,10 @@ export default class Home extends React.Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'black',
+
     },
     layout: {
-        flex:2, 
-        backgroundColor: 'black',
+        flex:2,
         alignContent: 'center', 
         alignItems: 'center',
         marginVertical: 20,

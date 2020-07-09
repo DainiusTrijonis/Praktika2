@@ -32,12 +32,12 @@ export default function App() {
           <Stack.Screen 
               name="Login" 
               component={LoginScreen} 
-              options= {{ title: 'Login', headerShown: false}}
+              options= {{ title: 'Prisijungimas', headerShown: false}}
           />
           <Stack.Screen 
               name="Register" 
               component={RegisterScreen} 
-              options= {{ title: 'Register', headerShown: false}}
+              options= {{ title: 'Registracija', headerShown: false}}
               
           />
           <Stack.Screen 
@@ -48,7 +48,7 @@ export default function App() {
           <Stack.Screen 
               name="AddKadastras" 
               component={AddKadastrasScreen} 
-              options= {{ title: 'Add Kadastras'}}
+              options= {{ title: 'Pridėti kadastrą'}}
           />
           <Stack.Screen 
               name="Sklypai" 
@@ -58,7 +58,7 @@ export default function App() {
           <Stack.Screen 
               name="AddSklypas" 
               component={AddSklypasScreen} 
-              options= {{ title: 'Add Sklypas'}}
+              options= {{ title: 'Pridėti sklypą'}}
           />
           <Stack.Screen 
               name="Bareliai" 
@@ -68,17 +68,17 @@ export default function App() {
           <Stack.Screen 
               name="AddBarelis" 
               component={AddBarelis} 
-              options= {{ title: 'Add Barelis'}}
+              options= {{ title: 'Pridėti barelį'}}
           />
           <Stack.Screen 
               name="Medziai" 
               component={MedziaiScreen} 
-              options= {{ title: 'Medziai'}}
+              options= {{ title: 'Medžiai'}}
           />
           <Stack.Screen 
               name="AddMedis" 
               component={AddMedis} 
-              options= {{ title: 'Add Medis'}}
+              options= {{ title: 'Pridėti medį'}}
           />
 
 

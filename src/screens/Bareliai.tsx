@@ -1,6 +1,6 @@
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {createApiClient, FirebaseSklypas, FirebaseKadastras, FirebaseBarelis} from '../api/Kadastrai';
 export type AppState = {
     firebaseKadastras: FirebaseKadastras,
@@ -78,7 +78,7 @@ export default class BareliaiScreen extends React.Component<Props> {
             .includes(this.state.search.toLowerCase()));
         
         return(
-            <View>
+            <ScrollView>
                 {filteredBareliai.map(b => {
                     return (
                         <TouchableOpacity onPress={() => this.onClickBarelis(b)} key={b.id} style= {styles.item}>
@@ -94,7 +94,7 @@ export default class BareliaiScreen extends React.Component<Props> {
                         </TouchableOpacity>
                     )
                 })}
-            </View>
+            </ScrollView>
         )
     }
     render() {

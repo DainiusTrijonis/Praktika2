@@ -1,6 +1,6 @@
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {createApiClient,FirebaseKadastras} from '../api/Kadastrai';
 export type AppState = {
     firebaseKadastrai?: FirebaseKadastras[],
@@ -52,7 +52,7 @@ export default class KadastraiScreen extends React.Component<Props> {
             .includes(this.state.search.toLowerCase()));
         
         return(
-            <View>
+            <ScrollView>
                 {filteredKadastrai.map(k => {
                     return (
                         <TouchableOpacity onPress={() => this.onClickKadastras(k)} key={k.id} style= {styles.item}>
@@ -64,7 +64,7 @@ export default class KadastraiScreen extends React.Component<Props> {
                         </TouchableOpacity>
                     )
                 })}
-            </View>
+            </ScrollView>
         )
     }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {createApiClient,FirebaseSklypas, FirebaseKadastras} from '../api/Kadastrai';
 export type AppState = {
     firebaseKadastras: FirebaseKadastras,
@@ -69,7 +69,7 @@ export default class SklypaiScreen extends React.Component<Props> {
             .includes(this.state.search.toLowerCase()));
         
         return(
-            <View>
+            <ScrollView>
                 {filteredSklypai.map(s => {
                     return (
                         <TouchableOpacity onPress={() => this.onClickSklypas(s)} key={s.id} style= {styles.item}>
@@ -86,7 +86,7 @@ export default class SklypaiScreen extends React.Component<Props> {
                         </TouchableOpacity>
                     )
                 })}
-            </View>
+            </ScrollView>
         )
     }
     render() {

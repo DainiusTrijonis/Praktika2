@@ -75,7 +75,7 @@ export default class AddMedis extends React.Component<Props> {
     }
     render() {
         return(
-            <View style={styles.body}>
+            <View >
                 <View style={styles.form}>
                     <View style={styles.middle}>
                         <Text style={{ color: 'black' }}>
@@ -88,7 +88,7 @@ export default class AddMedis extends React.Component<Props> {
                             style={styles.input} 
                             maxLength = {128}
                             autoCapitalize="none" 
-                            placeholder="Medzio Nr"
+                            placeholder="Medžio numeris"
                             onChangeText={medzioNr => this.setState( prevState => ({ medis: {...this.state.medis, medzioNr: medzioNr} }))}
                             value={this.state.medis.medzioNr}
                         />
@@ -98,7 +98,7 @@ export default class AddMedis extends React.Component<Props> {
                             style={styles.input} 
                             maxLength = {128}
                             autoCapitalize="none" 
-                            placeholder="Ardas Nr"
+                            placeholder="Ardas"
                             onChangeText={ardas => this.setState( prevState => ({ medis: {...this.state.medis, ardas: ardas} }))}
                             value={this.state.medis.ardas}
                         />
@@ -123,41 +123,43 @@ export default class AddMedis extends React.Component<Props> {
                             value={this.state.medis.bukle}
                         />
                     </View>
-                    <View style={styles.credentialBox}>
-                        <TextInput 
-                            style={styles.input} 
-                            maxLength = {128}
-                            autoCapitalize="none" 
-                            placeholder="D"
-                            onChangeText={D => this.setState( prevState => ({ medis: {...this.state.medis, D: D} }))}
-                            value={this.state.medis.D}
-                        />
+                    <View style={{flexDirection: 'row', justifyContent: "space-between", }}>
+                        <View style={styles.TreeSize}>
+                            <TextInput
+                                style={styles.input}
+                                maxLength = {128}
+                                autoCapitalize="none"
+                                placeholder="Plotis"
+                                onChangeText={D => this.setState( prevState => ({ medis: {...this.state.medis, D: D} }))}
+                                value={this.state.medis.D}
+                            />
+                        </View>
+                        <View style={styles.TreeSize}>
+                            <TextInput
+                                style={styles.input}
+                                maxLength = {128}
+                                autoCapitalize="none"
+                                placeholder="Aukštis"
+                                onChangeText={H => this.setState( prevState => ({ medis: {...this.state.medis, H: H} }))}
+                                value={this.state.medis.H}
+                            />
+                        </View>
+                        <View style={styles.TreeSize}>
+                            <TextInput
+                                style={styles.input}
+                                maxLength = {128}
+                                autoCapitalize="none"
+                                placeholder="Amžius"
+                                onChangeText={amzius => this.setState( prevState => ({ medis: {...this.state.medis, amzius: amzius} })) }
+                                value={this.state.medis.amzius.toString()}
+                            />
+                        </View>
                     </View>
-                    <View style={styles.credentialBox}>
-                        <TextInput 
-                            style={styles.input} 
-                            maxLength = {128}
-                            autoCapitalize="none" 
-                            placeholder="H"
-                            onChangeText={H => this.setState( prevState => ({ medis: {...this.state.medis, H: H} }))}
-                            value={this.state.medis.H}
-                        />
-                    </View>
-                    
-                    <View style={styles.credentialBox}>
-                        <TextInput 
-                            style={styles.input} 
-                            maxLength = {128}
-                            autoCapitalize="none" 
-                            placeholder="Amzius" 
-                            onChangeText={amzius => this.setState( prevState => ({ medis: {...this.state.medis, amzius: amzius} })) }
-                            value={this.state.medis.amzius.toString()}
-                        />
-                    </View>
+
                     <View style={styles.middle}>
                         <TouchableOpacity style={styles.button} onPress={this.onPressAddMedis} >
                             <Text>
-                                Add Medis
+                                Pridėti medį
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -168,38 +170,29 @@ export default class AddMedis extends React.Component<Props> {
 
 }
 const styles = StyleSheet.create({
-    body: {
-        paddingTop: 5,
-        padding: 20
-    },
     middle: {
         marginTop: 5,
         alignContent: 'center',
-        alignItems: 'center', 
-    },
-    loginText: {
-        marginTop: 32,
-        fontSize: 18,
-        fontWeight: "400",
-        textAlign: "center",
-        height: 72,
+        alignItems: 'center',
     },
     form: {
-        marginVertical: 10,
+        marginVertical: 5,
         marginBottom: 48,
-        marginHorizontal: 30,
+        marginHorizontal: 20,
     },
     credentialBox: {
         flexDirection: 'row',
-        marginVertical: 10,
+        marginVertical: 5,
         borderRadius: 5,
-        height: 45,
+        height: 40,
         backgroundColor: "gray",
     },
-    inputTitle: {
-        color: "#8A8F9E",
-        fontSize: 15,
-        textTransform: "uppercase",
+    TreeSize: {
+        marginVertical: 5,
+        borderRadius: 5,
+        height: 40,
+        width: 100,
+        backgroundColor: "gray",
     },
     input: {
         borderBottomColor: "#8A8F9E",
@@ -211,9 +204,9 @@ const styles = StyleSheet.create({
         color: "#161F3D"
     },
     button: {
-        marginVertical: 10,
-        marginHorizontal: 30,
-        backgroundColor: "gray",
+        marginVertical: 5,
+        marginHorizontal: 5,
+        backgroundColor: "grey",
         height: 45,
         borderRadius: 20,
         width: 150,

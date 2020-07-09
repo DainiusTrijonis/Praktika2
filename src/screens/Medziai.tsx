@@ -1,6 +1,6 @@
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {createApiClient,FirebaseSklypas, FirebaseKadastras, FirebaseBarelis, FirebaseMedis} from '../api/Kadastrai';
 export type AppState = {
     firebaseKadastras: FirebaseKadastras,
@@ -38,11 +38,11 @@ export default class MedziaiScreen extends React.Component<Props> {
             id:'',
             barelis:{barelioNr:'',plotas:0}
         },
-    }    
+    }
     searchText: any;
     searchDebounce: any = null;
 
-	componentDidMount= () => {
+    componentDidMount= () => {
         const firebaseKadastras:FirebaseKadastras = this.props.route.params.firebaseKadastras
         const firebaseSklypas:FirebaseSklypas = this.props.route.params.firebaseSklypas;
         const firebaseBarelis:FirebaseBarelis = this.props.route.params.firebaseBarelis;
@@ -55,16 +55,16 @@ export default class MedziaiScreen extends React.Component<Props> {
     }
     onUpdateMedziai = (medziai:FirebaseMedis[]) => {
         this.setState({
-			firebaseMedziai: medziai
+            firebaseMedziai: medziai
         });
     }
     onSearch = async (val:string) => {
         clearTimeout(this.searchDebounce);
-		this.searchDebounce = setTimeout(async () => {
-			this.setState({
-				search: val
-			});
-		}, 100);
+        this.searchDebounce = setTimeout(async () => {
+            this.setState({
+                search: val
+            });
+        }, 100);
     }
     onAddMedis = () => {
         this.props.navigation.navigate("AddMedis",{
@@ -86,20 +86,31 @@ export default class MedziaiScreen extends React.Component<Props> {
     renderKadastrai = (medziai: FirebaseMedis[]) => {
         const filteredMedziai = medziai.filter((m) => (m.medis.medzioRusis.toLowerCase() + m.medis.bukle.toLowerCase() + m.medis.ardas.toLowerCase())
             .includes(this.state.search.toLowerCase()));
-        
+
         return(
-            <View>
+            <ScrollView>
                 {filteredMedziai.map(m => {
                     return (
-                        <TouchableOpacity onPress={() => this.onClickMedis(m)} key={m.id} style= {styles.item}>
-                            <View style= {{flexDirection: 'row'}}>
-                                <Text style={styles.title}>Medzio numeris:</Text>
+                        <View style= {styles.item}>
+                            <View style= {styles.medis}>
                                 <Text style={styles.title}>{m.medis.medzioNr}</Text>
+                                <View style={{width: 1, backgroundColor: 'gray'}} />
+                                <Text style={styles.titleL}>{m.medis.ardas}</Text>
+                                <View style={{width: 1, backgroundColor: 'gray'}} />
+                                <Text style={styles.title}>{m.medis.medzioRusis}</Text>
+                                <View style={{width: 1, backgroundColor: 'gray'}} />
+                                <Text style={styles.titleL}>{m.medis.bukle}</Text>
+                                <View style={{width: 1, backgroundColor: 'gray'}} />
+                                <Text style={styles.title}>{m.medis.D}</Text>
+                                <View style={{width: 1, backgroundColor: 'gray'}} />
+                                <Text style={styles.title}>{m.medis.H}</Text>
+                                <View style={{width: 1, backgroundColor: 'gray'}} />
+                                <Text style={styles.titleL}>{m.medis.amzius}</Text>
                             </View>
-                        </TouchableOpacity>
+                        </View>
                     )
                 })}
-            </View>
+            </ScrollView>
         )
     }
 
@@ -108,9 +119,9 @@ export default class MedziaiScreen extends React.Component<Props> {
         return (
             <View style={styles.body}>
                 <TouchableOpacity style={styles.header} activeOpacity={1} onPress={() => this.searchText.focus()} >
-                    <TextInput  
+                    <TextInput
                         style={styles.input}
-                        numberOfLines={1} 
+                        numberOfLines={1}
                         placeholder="Search..."
                         placeholderTextColor="#b6c1cd"
                         maxLength = {128}
@@ -120,9 +131,9 @@ export default class MedziaiScreen extends React.Component<Props> {
                     />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.onAddMedis} style={{alignContent:'center', alignSelf:'center', marginBottom:8}}>
-                                <Ionicons name="ios-add-circle-outline"
-                                    size={35} color="darkgray" 
-                                />
+                    <Ionicons name="ios-add-circle-outline"
+                              size={35} color="darkgray"
+                    />
                 </TouchableOpacity>
                 {firebaseMedziai  ? this.renderKadastrai(firebaseMedziai) : <Text>Empty or loading..</Text>}
             </View>
@@ -193,4 +204,4 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         flexDirection: 'row'
     }
-}); 
+});
