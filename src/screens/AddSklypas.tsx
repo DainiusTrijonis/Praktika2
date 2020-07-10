@@ -29,7 +29,7 @@ export default class AddSklypas extends React.Component<Props> {
         sklypas: 
             {
                 sklypoNr:'',
-                plotas:0,
+                plotas:1,
             }, 
         errorMsg: '',
     }
@@ -68,7 +68,7 @@ export default class AddSklypas extends React.Component<Props> {
                             style={styles.input} 
                             maxLength = {128}
                             autoCapitalize="none" 
-                            placeholder="SklypoNr"
+                            placeholder="Sklypo numeris"
                             onChangeText={sklypoNr => this.setState( prevState => ({ sklypas: {...this.state.sklypas, sklypoNr: sklypoNr} }))}
                             value={this.state.sklypas.sklypoNr}
                         />
@@ -79,7 +79,7 @@ export default class AddSklypas extends React.Component<Props> {
                             style={styles.input} 
                             maxLength = {128}
                             autoCapitalize="none" 
-                            placeholder="Plotas" 
+                            placeholder="Plotas hektarais"
                             onChangeText={plotas => this.setState( prevState => ({ sklypas: {...this.state.sklypas, plotas: plotas} })) }
                             value={this.state.sklypas.plotas.toString()}
                         />

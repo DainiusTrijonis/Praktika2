@@ -52,7 +52,7 @@ export default class AddKadastras extends React.Component<Props> {
                             style={styles.input} 
                             maxLength = {128}
                             autoCapitalize="none" 
-                            placeholder="KadastrinisNR"
+                            placeholder="Kadastrinis numeris"
                             onChangeText={kadastrinisNr => this.setState( prevState => ({ kadastras: {...this.state.kadastras, kadastrinisNr: kadastrinisNr} }))}
                             value={this.state.kadastras.kadastrinisNr}
                         />

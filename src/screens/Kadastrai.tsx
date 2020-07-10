@@ -77,7 +77,7 @@ export default class KadastraiScreen extends React.Component<Props> {
                     <TextInput  
                         style={styles.input}
                         numberOfLines={1} 
-                        placeholder="Search..."
+                        placeholder="Paieška..."
                         placeholderTextColor="#b6c1cd"
                         maxLength = {128}
                         autoCapitalize="none"
