@@ -86,6 +86,7 @@ export default class SklypaiScreen extends React.Component<Props> {
                         </TouchableOpacity>
                     )
                 })}
+                <View style={{height: 120 }}/>
             </ScrollView>
         )
     }

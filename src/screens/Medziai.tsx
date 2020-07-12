@@ -89,27 +89,29 @@ export default class MedziaiScreen extends React.Component<Props> {
 
         return(
             <ScrollView>
+
                 {filteredMedziai.map(m => {
                     return (
                         <View style= {styles.item}>
                             <View style= {styles.medis}>
-                                <Text style={styles.title}>{m.medis.medzioNr}</Text>
-                                <View style={{width: 1, backgroundColor: 'gray'}} />
-                                <Text style={styles.titleL}>{m.medis.ardas}</Text>
-                                <View style={{width: 1, backgroundColor: 'gray'}} />
-                                <Text style={styles.title}>{m.medis.medzioRusis}</Text>
-                                <View style={{width: 1, backgroundColor: 'gray'}} />
-                                <Text style={styles.titleL}>{m.medis.bukle}</Text>
-                                <View style={{width: 1, backgroundColor: 'gray'}} />
-                                <Text style={styles.title}>{m.medis.D}</Text>
-                                <View style={{width: 1, backgroundColor: 'gray'}} />
-                                <Text style={styles.title}>{m.medis.H}</Text>
-                                <View style={{width: 1, backgroundColor: 'gray'}} />
-                                <Text style={styles.titleL}>{m.medis.amzius}</Text>
+                                <Text style={styles.Nr}>{m.medis.medzioNr}</Text>
+                                <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                                <Text style={styles.Ardas}>{m.medis.ardas}</Text>
+                                <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                                <Text style={styles.rusis}>{m.medis.medzioRusis}</Text>
+                                <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                                <Text style={styles.bukle}>{m.medis.bukle}</Text>
+                                <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                                <Text style={styles.h}>{m.medis.D}</Text>
+                                <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                                <Text style={styles.h}>{m.medis.H}</Text>
+                                <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                                <Text style={styles.amzius}>{m.medis.amzius}</Text>
                             </View>
                         </View>
                     )
                 })}
+                <View style={{height: 200 }}/>
             </ScrollView>
         )
     }
@@ -135,6 +137,23 @@ export default class MedziaiScreen extends React.Component<Props> {
                               size={35} color="darkgray"
                     />
                 </TouchableOpacity>
+                <View style= {styles.Info}>
+                    <View style= {styles.medis}>
+                        <Text style={styles.Nr}>Nr</Text>
+                        <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                        <Text style={styles.Ardas}>Ardas</Text>
+                        <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                        <Text style={styles.rusis}>Rušis</Text>
+                        <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                        <Text style={styles.bukle}>Buklė</Text>
+                        <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                        <Text style={styles.h}>D</Text>
+                        <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                        <Text style={styles.h}>H</Text>
+                        <View style={{width: 0.5, backgroundColor: 'gray'}} />
+                        <Text style={styles.amzius}>Metai</Text>
+                    </View>
+                </View>
                 {firebaseMedziai  ? this.renderKadastrai(firebaseMedziai) : <Text>Empty or loading..</Text>}
             </View>
         )
@@ -176,12 +195,56 @@ const styles = StyleSheet.create({
         shadowColor:"#e1e5e8",
         shadowRadius: 40,
         shadowOpacity: 20,
-        marginBottom: 14,
+        marginTop: 14,
         display: 'flex',
         flexDirection: 'column',
         borderColor: "#fff",
         padding: 10,
         position: "relative",
+    },
+    Info: {
+        flexShrink: 0,
+        borderRadius: 8,
+        backgroundColor: "#c3f1c7",
+        shadowColor:"#e1e5e8",
+        shadowRadius: 40,
+        shadowOpacity: 20,
+        marginBottom: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        borderColor: "#fff",
+        padding: 10,
+        position: "relative",
+
+    },
+    Ardas: {
+        width: 42,
+        margin: 6,
+        fontSize: 16,
+        fontWeight: "400",
+        color: "#20455e",
+    },
+
+    Nr:{
+        width: 17,
+        margin: 6,
+        fontSize: 16,
+        fontWeight: "400",
+        color: "#20455e",
+    },
+    h:{
+        width: 28,
+        margin: 6,
+        fontSize: 16,
+        fontWeight: "400",
+        color: "#20455e",
+    },
+    amzius:{
+        width: 41,
+        margin: 6,
+        fontSize: 16,
+        fontWeight: "400",
+        color: "#20455e",
     },
     title: {
         width: 39,
@@ -191,8 +254,15 @@ const styles = StyleSheet.create({
         color: "#20455e",
 
     },
-    titleL: {
-        width: 54,
+    rusis: {
+        width: 40,
+        margin: 6,
+        fontSize: 16,
+        fontWeight: "400",
+        color: "#20455e",
+    },
+    bukle: {
+        width: 75,
         margin: 6,
         fontSize: 16,
         fontWeight: "400",
