@@ -80,7 +80,7 @@ export default class Login extends React.Component<Props> {
                                 style={styles.input} 
                                 maxLength = {128}
                                 autoCapitalize="none" 
-                                placeholder="Email" 
+                                placeholder="El.Paštas"
                                 onChangeText={email => this.setState({ email })}
                                 value={this.state.email}
                                 ref ={ref => this.emailText = ref}
@@ -97,7 +97,7 @@ export default class Login extends React.Component<Props> {
                                 maxLength = {128}
                                 secureTextEntry 
                                 autoCapitalize="none" 
-                                placeholder="Password"
+                                placeholder="Slaptažodis"
                                 onChangeText={password => this.setState({ password })}
                                 value={this.state.password}
                                 ref ={ref => this.passwordText = ref}
@@ -107,14 +107,14 @@ export default class Login extends React.Component<Props> {
                     <View style={{ marginTop: 30, alignContent: 'center', alignItems: 'center' }}>
                         <TouchableOpacity style={styles.button} onPress={this.onPressLogin} >
                             <Text>
-                                Login
+                                Prisijungti
                             </Text>
                         </TouchableOpacity>
                     </View>
 
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')} style={{ marginTop: 5, alignContent: 'center', alignItems: 'center' }}>
                         <Text style={{ color: 'Black' }}>
-                            Register
+                            Registruotis
                     </Text>
                     </TouchableOpacity>
                 </View>

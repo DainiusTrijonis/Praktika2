@@ -1,6 +1,7 @@
 import React from 'react'
-import { Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import {createApiClient, FirebaseKadastras, FirebaseSklypas,FirebaseBarelis,Medis} from '../api/Kadastrai';
+import RNPickerSelect from 'react-native-picker-select';
 
 export type AppState = {
     firebaseKadastras: FirebaseKadastras,
@@ -75,7 +76,7 @@ export default class AddMedis extends React.Component<Props> {
     }
     render() {
         return(
-            <View >
+            <ScrollView >
                 <View style={styles.form}>
                     <View style={styles.middle}>
                         <Text style={{ color: 'black' }}>
@@ -103,26 +104,62 @@ export default class AddMedis extends React.Component<Props> {
                             value={this.state.medis.ardas}
                         />
                     </View>
+                    <RNPickerSelect
+                        placeholder={{label: 'Pasirinkite medžio rūšį...'}}
+                        onValueChange={medzioRusis => this.setState( prevState => ({ medis: {...this.state.medis, medzioRusis: medzioRusis} }))}
+                        value={this.state.medis.medzioRusis}
+                        items={[
+                            { label: 'Pušis paprastoji', value: 'P' },
+                            { label: 'Pušis kalninė', value: 'Pk' },
+                            { label: 'Pušis bankso', value: 'Pb' },
+                            { label: 'Pušis juodoji', value: 'Pj' },
+                            { label: 'Kedras', value: 'Kd' },
+                            { label: 'Eglė', value: 'E' },
+                            { label: 'Maumedis', value: 'M' },
+                            { label: 'Pocugė', value: 'Pc' },
+                            { label: 'Kėnis', value: 'Kn' },
+                            { label: '________________________________________', value: 'Nieko nepasirinkote' },
+                            { label: 'Ąžuolas', value: 'Ą' },
+                            { label: 'Ąžuolas raudonasis', value: 'Ąr' },
+                            { label: 'Uosis', value: 'U' },
+                            { label: 'Klevas', value: 'K' },
+                            { label: 'Skroblas', value: 'Sb' },
+                            { label: 'Guoba', value: 'G' },
+                            { label: 'Skirpstas', value: 'S' },
+                            { label: 'Bukas', value: 'Bu' },
+                            { label: 'Vinkšna', value: 'V' },
+                            { label: '________________________________________', value: 'Nieko nepasirinkote' },
+                            { label: 'Beržas', value: 'B' },
+                            { label: 'Juodalksnis', value: 'J' },
+                            { label: 'Liepa', value: 'L' },
+                            { label: 'Drebulė', value: 'D' },
+                            { label: 'Baltalksnis', value: 'Bt' },
+                            { label: 'Tuopa', value: 'T' },
+                            { label: 'Gluosnis', value: 'Gl' },
+                            { label: 'Blindė', value: 'Bl' },
+                        ]}
+                    />
                     <View style={styles.credentialBox}>
-                        <TextInput 
-                            style={styles.input} 
+                        <TextInput
+                            style={styles.input}
                             maxLength = {128}
-                            autoCapitalize="none" 
-                            placeholder="Medzio Rusis"
+                            autoCapitalize="none"
+                            placeholder="Medžio rūšis"
                             onChangeText={medzioRusis => this.setState( prevState => ({ medis: {...this.state.medis, medzioRusis: medzioRusis} }))}
                             value={this.state.medis.medzioRusis}
                         />
                     </View>
-                    <View style={styles.credentialBox}>
-                        <TextInput 
-                            style={styles.input} 
-                            maxLength = {128}
-                            autoCapitalize="none" 
-                            placeholder="Bukle"
-                            onChangeText={bukle => this.setState( prevState => ({ medis: {...this.state.medis, bukle: bukle} }))}
-                            value={this.state.medis.bukle}
-                        />
-                    </View>
+                    <RNPickerSelect
+                        placeholder={{label: 'Pasirinkite medžio būklę...'}}
+                        onValueChange={bukle => this.setState( prevState => ({ medis: {...this.state.medis, bukle: bukle} }))}
+                        value={this.state.medis.bukle}
+                        items={[
+                            { label: 'Gryni', value: 'Gryni' },
+                            { label: 'Pusgryniai', value: 'Pusgryniai' },
+                            { label: 'Malkiniai', value: 'Malkiniai' },
+                        ]}
+                    />
+
                     <View style={{flexDirection: 'row', justifyContent: "space-between", }}>
                         <View style={styles.TreeSize}>
                             <TextInput
@@ -163,8 +200,9 @@ export default class AddMedis extends React.Component<Props> {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={{height: 50}} />
                 </View>
-            </View>
+            </ScrollView>
         )
     }
 
@@ -216,5 +254,18 @@ const styles = StyleSheet.create({
     person: {
         alignItems: "center",
         justifyContent: "center",
+    },
+});
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+        fontSize: 16,
+        paddingTop: 13,
+        paddingHorizontal: 10,
+        paddingBottom: 12,
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 4,
+        backgroundColor: 'white',
+        color: 'black',
     },
 });

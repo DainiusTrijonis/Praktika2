@@ -59,7 +59,7 @@ export default class Home extends React.Component<Props> {
                         <TouchableOpacity
                             style={styles.button}
                             onPress={() => this.logOut()}>
-                            <Text>Log Out</Text>
+                            <Text>Atsijungti</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.button}

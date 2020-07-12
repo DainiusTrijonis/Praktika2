@@ -81,7 +81,7 @@ export default class AddKadastras extends React.Component<Props> {
                     <View style={styles.middle}>
                         <TouchableOpacity style={styles.button} onPress={this.onPressAddKadastras} >
                             <Text>
-                                AddKadastras
+                                Pridėti kadastrą
                             </Text>
                         </TouchableOpacity>
                     </View>

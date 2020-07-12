@@ -87,7 +87,7 @@ export default class AddSklypas extends React.Component<Props> {
                     <View style={styles.middle}>
                         <TouchableOpacity style={styles.button} onPress={this.onPressAddSklypas} >
                             <Text>
-                                AddSklypas
+                                Pridėti sklypą
                             </Text>
                         </TouchableOpacity>
                     </View>

@@ -80,7 +80,7 @@ export default class AddBarelis extends React.Component<Props> {
                             style={styles.input} 
                             maxLength = {128}
                             autoCapitalize="none" 
-                            placeholder="BarelioNr"
+                            placeholder="Barelio numeris"
                             onChangeText={barelioNr => this.setState( prevState => ({ barelis: {...this.state.barelis, barelioNr: barelioNr} }))}
                             value={this.state.barelis.barelioNr}
                         />
@@ -91,7 +91,7 @@ export default class AddBarelis extends React.Component<Props> {
                             style={styles.input} 
                             maxLength = {128}
                             autoCapitalize="none" 
-                            placeholder="Plotas" 
+                            placeholder="Plotas arais"
                             onChangeText={plotas => this.setState( prevState => ({ barelis: {...this.state.barelis, plotas: plotas} })) }
                             value={this.state.barelis.plotas.toString()}
                         />
@@ -99,7 +99,7 @@ export default class AddBarelis extends React.Component<Props> {
                     <View style={styles.middle}>
                         <TouchableOpacity style={styles.button} onPress={this.onPressAddBarelis} >
                             <Text>
-                                Add Barelis
+                                Pridėti barelį
                             </Text>
                         </TouchableOpacity>
                     </View>
