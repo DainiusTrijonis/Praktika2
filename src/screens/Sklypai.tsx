@@ -111,7 +111,7 @@ export default class SklypaiScreen extends React.Component<Props> {
                                     size={35} color="darkgray" 
                                 />
                 </TouchableOpacity>
-                {firebaseSklypai  ? this.renderKadastrai(firebaseSklypai) : <Text>Empty or loading..</Text>}
+                {firebaseSklypai  ? this.renderKadastrai(firebaseSklypai) : <Text>Prašome palaukti..</Text>}
             </View>
         )
     }

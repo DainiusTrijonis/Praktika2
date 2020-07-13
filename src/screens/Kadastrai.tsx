@@ -91,7 +91,7 @@ export default class KadastraiScreen extends React.Component<Props> {
                                     size={35} color="darkgray" 
                                 />
                 </TouchableOpacity>
-                {firebaseKadastrai  ? this.renderKadastrai(firebaseKadastrai) : <Text>Empty or loading..</Text>}
+                {firebaseKadastrai  ? this.renderKadastrai(firebaseKadastrai) : <Text>Prašome palaukti..</Text>}
             </View>
         )
     }

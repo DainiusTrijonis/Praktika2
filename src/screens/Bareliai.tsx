@@ -119,7 +119,7 @@ export default class BareliaiScreen extends React.Component<Props> {
                                     size={35} color="darkgray" 
                                 />
                 </TouchableOpacity>
-                {firebaseBareliai  ? this.renderKadastrai(firebaseBareliai) : <Text>Empty or loading..</Text>}
+                {firebaseBareliai  ? this.renderKadastrai(firebaseBareliai) : <Text>Prašome palaukti..</Text>}
             </View>
         )
     }

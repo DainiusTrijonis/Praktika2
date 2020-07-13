@@ -154,7 +154,7 @@ export default class MedziaiScreen extends React.Component<Props> {
                         <Text style={styles.amzius}>Metai</Text>
                     </View>
                 </View>
-                {firebaseMedziai  ? this.renderKadastrai(firebaseMedziai) : <Text>Empty or loading..</Text>}
+                {firebaseMedziai  ? this.renderKadastrai(firebaseMedziai) : <Text>Prašome palaukti..</Text>}
             </View>
         )
     }
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     Ardas: {
         width: 42,
         margin: 6,
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: "400",
         color: "#20455e",
     },
@@ -228,28 +228,28 @@ const styles = StyleSheet.create({
     Nr:{
         width: 17,
         margin: 6,
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: "400",
         color: "#20455e",
     },
     h:{
         width: 28,
         margin: 6,
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: "400",
         color: "#20455e",
     },
     amzius:{
         width: 41,
         margin: 6,
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: "400",
         color: "#20455e",
     },
     title: {
         width: 39,
         margin: 6,
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: "400",
         color: "#20455e",
 
@@ -257,14 +257,14 @@ const styles = StyleSheet.create({
     rusis: {
         width: 40,
         margin: 6,
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: "400",
         color: "#20455e",
     },
     bukle: {
         width: 75,
         margin: 6,
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: "400",
         color: "#20455e",
 
