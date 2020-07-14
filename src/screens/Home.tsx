@@ -7,6 +7,8 @@ import {
   SafeAreaView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+ 
+import SplashScreen from 'react-native-splash-screen';
 
 let unsubscribe: any;
 export type AppState = {
@@ -22,6 +24,7 @@ export default class Home extends React.Component<Props> {
     initializing: true,
   };
   componentDidMount = () => {
+    SplashScreen.hide();
     unsubscribe = auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({

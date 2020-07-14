@@ -18,6 +18,7 @@ import AddBarelis from './src/screens/AddBarelis'
 
 import MedziaiScreen from './src/screens/Medziai'
 import AddMedis from './src/screens/AddMedis'
+
 const Stack = createStackNavigator();
 
 export default function App() {
