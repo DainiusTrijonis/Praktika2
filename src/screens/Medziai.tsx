@@ -1,6 +1,6 @@
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Alert} from 'react-native';
 import {createApiClient,FirebaseSklypas, FirebaseKadastras, FirebaseBarelis, FirebaseMedis} from '../api/Kadastrai';
 export type AppState = {
     firebaseKadastras: FirebaseKadastras,
@@ -52,6 +52,31 @@ export default class MedziaiScreen extends React.Component<Props> {
             firebaseBarelis: firebaseBarelis
         })
         api.getMedziaiRealtime(this.onUpdateMedziai,firebaseKadastras.id, firebaseSklypas.id, firebaseBarelis.id)
+
+        this.props.navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity onPress={this.onDeleteBarelis} style={{alignContent:'center', alignSelf:'center', marginBottom:8, marginRight:8}}>
+                                <Ionicons name="ios-trash"
+                                    size={35} color="darkgray" 
+                                />
+                </TouchableOpacity>
+            )
+        });
+    }
+    onDeleteBarelis = () => {
+        Alert.alert(
+            'Ištrinti bareli',
+            this.state.firebaseBarelis.barelis.barelioNr,
+            [
+              {
+                text: 'Atšaukti',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel'
+              },
+              { text: 'Patvirtinti', onPress: () => {api.deleteBarelis(this.state.firebaseBarelis, this.state.firebaseKadastras.id, this.state.firebaseSklypas.id); this.props.navigation.navigate('Bareliai')}}
+            ],
+            { cancelable: false }
+          );
     }
     onUpdateMedziai = (medziai:FirebaseMedis[]) => {
         this.setState({

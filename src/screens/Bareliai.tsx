@@ -1,6 +1,6 @@
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Alert} from 'react-native';
 import {createApiClient, FirebaseSklypas, FirebaseKadastras, FirebaseBarelis} from '../api/Kadastrai';
 export type AppState = {
     firebaseKadastras: FirebaseKadastras,
@@ -45,7 +45,34 @@ export default class BareliaiScreen extends React.Component<Props> {
             firebaseSklypas:firebaseSklypas
         })
         api.getBareliaiRealtime(this.onUpdateBareliai,firebaseKadastras.id, firebaseSklypas.id)
+
+        this.props.navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity onPress={this.onDeleteSklypas} style={{alignContent:'center', alignSelf:'center', marginBottom:8, marginRight:8}}>
+                                <Ionicons name="ios-trash"
+                                    size={35} color="darkgray" 
+                                />
+                </TouchableOpacity>
+            )
+        });
     }
+    
+    onDeleteSklypas = () => {
+        Alert.alert(
+            'Ištrinti sklypą',
+            this.state.firebaseSklypas.sklypas.sklypoNr,
+            [
+              {
+                text: 'Atšaukti',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel'
+              },
+              { text: 'Patvirtinti', onPress: () => {api.deleteSklypas(this.state.firebaseSklypas, this.state.firebaseKadastras.id); this.props.navigation.navigate('Sklypai')}}
+            ],
+            { cancelable: false }
+          );
+    }
+
     onUpdateBareliai = (bareliai:FirebaseBarelis[]) => {
         this.setState({
 			firebaseBareliai: bareliai

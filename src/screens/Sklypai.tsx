@@ -1,6 +1,6 @@
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity, Button, Alert} from 'react-native';
 import {createApiClient,FirebaseSklypas, FirebaseKadastras} from '../api/Kadastrai';
 export type AppState = {
     firebaseKadastras: FirebaseKadastras,
@@ -34,10 +34,35 @@ export default class SklypaiScreen extends React.Component<Props> {
 
 	componentDidMount= () => {
         const firebaseKadastras:FirebaseKadastras = this.props.route.params.firebaseKadastras
+        this.props.navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity onPress={this.onDeleteKadastras} style={{alignContent:'center', alignSelf:'center', marginBottom:8, marginRight:8}}>
+                                <Ionicons name="ios-trash"
+                                    size={35} color="darkgray" 
+                                />
+                </TouchableOpacity>
+            )
+        });
+
         this.setState({
             firebaseKadastras:firebaseKadastras
         })
         api.getSklypaiRealtime(this.onUpdateSklypai,firebaseKadastras.id)
+    }
+    onDeleteKadastras = () => {
+        Alert.alert(
+            'Ištrinti kadastrą',
+            this.state.firebaseKadastras.kadastras.kadastrinisNr,
+            [
+              {
+                text: 'Atšaukti',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel'
+              },
+              { text: 'Patvirtinti', onPress: () => {api.deleteKadastras(this.state.firebaseKadastras); this.props.navigation.navigate('Kadastrai')}}
+            ],
+            { cancelable: false }
+          );
     }
     onUpdateSklypai = (sklypai:FirebaseSklypas[]) => {
         this.setState({

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Button } from 'react-native';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -54,7 +56,9 @@ export default function App() {
           <Stack.Screen 
               name="Sklypai" 
               component={SklypaiScreen} 
-              options= {{ title: 'Sklypai'}}
+              options = {{ 
+                  title: 'Sklypai', 
+              }}
           />
           <Stack.Screen 
               name="AddSklypas" 
@@ -81,8 +85,6 @@ export default function App() {
               component={AddMedis} 
               options= {{ title: 'Pridėti medį'}}
           />
-
-
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -57,6 +57,11 @@ export type ApiClient = {
     addBarelis(b:Barelis,kadastroId:string, sklypoId:string):  void
     addMedis(m:Medis,kadastroId:string, sklypoId:string, barelioId:string):  void
 
+    deleteKadastras:(k:FirebaseKadastras) => Promise<boolean>
+    deleteSklypas:(s:FirebaseSklypas,kadastroId:string) => Promise<boolean>
+    deleteBarelis:(b:FirebaseBarelis,kadastroId:string, sklypoId:string) => Promise<boolean>
+    deleteMedis:(m:FirebaseMedis,kadastroId:string, sklypoId:string, barelioId:string) => Promise<boolean>
+
 }
 
 export const createApiClient = (): ApiClient => {
@@ -190,7 +195,34 @@ export const createApiClient = (): ApiClient => {
             }
         },
 
-
+        deleteKadastras: async(k:FirebaseKadastras) => {
+            return await firestore().collection("Kadastrai").doc(k.id).delete().then(function() {
+                return true;
+            }).catch(function(error) {
+                return false;
+            });
+        },
+        deleteSklypas: async(s:FirebaseSklypas,kadastroId:string) => {
+            return await firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(s.id).delete().then(function() {
+                return true;
+            }).catch(function(error) {
+                return false;
+            });
+        },
+        deleteBarelis: async (b:FirebaseBarelis,kadastroId:string, sklypoId:string) => {
+            return await firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection("Bareliai").doc(b.id).delete().then(function() {
+                return true;
+            }).catch(function(error) {
+                return false;
+            });
+        },
+        deleteMedis: async (m:FirebaseMedis,kadastroId:string, sklypoId:string, barelioId:string) => {
+            return await firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection("Bareliai").doc(barelioId).collection("Medziai").doc(m.id).delete().then(function() {
+                return true;
+            }).catch(function(error) {
+                return false;
+            });
+        },
 
     }
 }
