@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.praktika">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.praktika">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,8 +10,8 @@
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
-      android:theme="@style/AppTheme">
-
+      android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme"
