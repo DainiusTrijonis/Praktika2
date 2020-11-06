@@ -24,7 +24,6 @@ export default class MedziaiScreen extends React.Component<Props> {
         firebaseKadastras: {
             id:'',
             kadastras: {
-                vartotojoID:'',
                 kadastrinisNr:'',
                 adresas:'',
                 data:'',

@@ -23,7 +23,6 @@ export default class BareliaiScreen extends React.Component<Props> {
         firebaseKadastras: {
             id:'',
             kadastras: {
-                vartotojoID:'',
                 kadastrinisNr:'',
                 adresas:'',
                 data:'',

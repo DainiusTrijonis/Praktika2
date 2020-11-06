@@ -6,7 +6,6 @@ export type FirebaseKadastras = {
     kadastras: Kadastras,
 }
 export type Kadastras = {
-    vartotojoID: string,
     kadastrinisNr: string,
     adresas: string,
     data: string,
@@ -18,7 +17,7 @@ export type FirebaseSklypas = {
 }
 export type Sklypas = {
     sklypoNr: string,
-    plotas: number,
+    plotas?: number,
 }
 
 export type FirebaseBarelis = {
@@ -27,7 +26,7 @@ export type FirebaseBarelis = {
 }
 export type Barelis = {
     barelioNr: string,
-    plotas: number,
+    plotas?: number,
 }
 
 export type FirebaseMedis = {
@@ -66,41 +65,10 @@ export type ApiClient = {
 
 export const createApiClient = (): ApiClient => {
     return {
-
-        getSklypaiRealtime: (callback, kadastroId ) => {
-            firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai")
-                .onSnapshot((querySnapshot) => {
-                    var s:FirebaseSklypas[] = new Array<FirebaseSklypas>();
-                    querySnapshot.forEach((doc:any)=> {
-                        const document:Sklypas = doc.data()
-                        const docId:string = doc.id
-                        
-                        const firebaseSklypas:FirebaseSklypas = {id:docId,sklypas:document}
-                        s.push(firebaseSklypas); 
-                    });
-                    callback(s);
-                })
-        },
-        addSklypas: (s:Sklypas, kadastroId:string) => {
-            const user = auth().currentUser;
-            if (user) {
-                firestore().collection('Kadastrai').doc(kadastroId).collection("Sklypai").where('sklypoNr','==',s.sklypoNr).get()
-                    .then(snapshot =>{
-                        var id;
-                        snapshot.forEach((doc)=>{
-                            id = doc.id
-                        })
-                        if(snapshot.empty) {
-                            firestore().collection('Kadastrai').doc(kadastroId).collection("Sklypai").add(s);
-                        }
-                        else {
-                            firestore().collection('Kadastrai').doc(kadastroId).collection("Sklypai").doc(id).set(s, {merge: true});
-                        }
-                    })
-            }
-        },
         getKadastraiRealtime: (callback) => {
-            firestore().collection("Kadastrai")
+            const userId = auth().currentUser?.uid;
+            if(userId != null) {
+                firestore().collection("UserCollections").doc(userId).collection("Kadastrai")
                 .onSnapshot((querySnapshot) => {
                     var k:FirebaseKadastras[] = new Array<FirebaseKadastras>();
                     querySnapshot.forEach((doc:any)=> {
@@ -111,29 +79,25 @@ export const createApiClient = (): ApiClient => {
                     });
                     callback(k);
                 })
-        },
-        addKadastras: (k:Kadastras) => {
-            const user = auth().currentUser;
-            if (user) {
-                k.vartotojoID = user.uid;
-                firestore().collection('Kadastrai').where('kadastrinisNr','==',k.kadastrinisNr).get()
-                    .then(snapshot =>{
-                        var id;
-                        snapshot.forEach((doc)=>{
-                            id = doc.id
-                        })
-                        if(snapshot.empty) {
-                            firestore().collection('Kadastrai').add(k);
-                        }
-                        else {
-                            firestore().collection('Kadastrai').doc(id).set(k, {merge: true})
-                        }
-                    })
             }
         },
-
+        getSklypaiRealtime: (callback, kadastroId ) => {
+            const userId = auth().currentUser?.uid;
+            firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai")
+                .onSnapshot((querySnapshot) => {
+                    var s:FirebaseSklypas[] = new Array<FirebaseSklypas>();
+                    querySnapshot.forEach((doc:any)=> {
+                        const document:Sklypas = doc.data()
+                        const docId:string = doc.id
+                        const firebaseSklypas:FirebaseSklypas = {id:docId,sklypas:document}
+                        s.push(firebaseSklypas); 
+                    });
+                    callback(s);
+                })
+        },
         getBareliaiRealtime: (callback, kadastroId, sklypoId ) => {
-            firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai')
+            const userId = auth().currentUser?.uid;
+            firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai')
                 .onSnapshot((querySnapshot) => {
                     var b:FirebaseBarelis[] = new Array<FirebaseBarelis>();
                     querySnapshot.forEach((doc:any)=> {
@@ -146,7 +110,8 @@ export const createApiClient = (): ApiClient => {
                 })
         },
         getMedziaiRealtime: (callback, kadastroId, sklypoId, barelioId ) => {
-            firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(barelioId).collection('Medziai')
+            const userId = auth().currentUser?.uid;
+            firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(barelioId).collection('Medziai')
                 .onSnapshot((querySnapshot) => {
                     var m:FirebaseMedis[] = new Array<FirebaseMedis>();
                     querySnapshot.forEach((doc:any)=> {
@@ -158,66 +123,106 @@ export const createApiClient = (): ApiClient => {
                     callback(m);
                 })
         },
-        addBarelis: (b:Barelis, kadastroId:string, sklypoId:string) => {
-            const user = auth().currentUser;
-            if (user) {
-                firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').where('barelioNr','==',b.barelioNr).get()
+        addKadastras: (k:Kadastras) => {
+            const userId = auth().currentUser?.uid;
+            if (userId != null) {
+                firestore().collection("UserCollections").doc(userId).collection('Kadastrai').where('kadastrinisNr','==',k.kadastrinisNr).get()
                     .then(snapshot =>{
                         var id;
                         snapshot.forEach((doc)=>{
                             id = doc.id
                         })
                         if(snapshot.empty) {
-                            firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').add(b);
+                            firestore().collection("UserCollections").doc(userId).collection('Kadastrai').add(k);
                         }
                         else {
-                            firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(id).set(b, {merge: true});
+                            firestore().collection("UserCollections").doc(userId).collection('Kadastrai').doc(id).set(k, {merge: true})
+                        }
+                    })
+            }
+        },
+        addSklypas: (s:Sklypas, kadastroId:string) => {
+            const userId = auth().currentUser?.uid;
+            if (userId != null) {
+                firestore().collection("UserCollections").doc(userId).collection('Kadastrai').doc(kadastroId).collection("Sklypai").where('sklypoNr','==',s.sklypoNr).get()
+                    .then(snapshot =>{
+                        var id;
+                        snapshot.forEach((doc)=>{
+                            id = doc.id
+                        })
+                        if(snapshot.empty) {
+                            firestore().collection("UserCollections").doc(userId).collection('Kadastrai').doc(kadastroId).collection("Sklypai").add(s);
+                        }
+                        else {
+                            firestore().collection("UserCollections").doc(userId).collection('Kadastrai').doc(kadastroId).collection("Sklypai").doc(id).set(s, {merge: true});
+                        }
+                    })
+            }
+        },
+        addBarelis: (b:Barelis, kadastroId:string, sklypoId:string) => {
+            const userId = auth().currentUser?.uid;
+            if (userId != null) {
+                firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').where('barelioNr','==',b.barelioNr).get()
+                    .then(snapshot =>{
+                        var id;
+                        snapshot.forEach((doc)=>{
+                            id = doc.id
+                        })
+                        if(snapshot.empty) {
+                            firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').add(b);
+                        }
+                        else {
+                            firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(id).set(b, {merge: true});
                         }
                     })
             }
         },
         addMedis: (m:Medis, kadastroId:string, sklypoId:string, barelioId:string) => {
-            const user = auth().currentUser;
-            if (user) {
-                firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(barelioId).collection('Medziai').where('medzioNr','==',m.medzioNr).get()
+            const userId = auth().currentUser?.uid;
+            if (userId) {
+                firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(barelioId).collection('Medziai').where('medzioNr','==',m.medzioNr).get()
                     .then(snapshot =>{
                         var id;
                         snapshot.forEach((doc)=>{
                             id = doc.id
                         })
                         if(snapshot.empty) {
-                            firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(barelioId).collection('Medziai').add(m);
+                            firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(barelioId).collection('Medziai').add(m);
                         }
                         else {
-                            firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(barelioId).collection('Medziai').doc(id).set(m, {merge: true});
+                            firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection('Bareliai').doc(barelioId).collection('Medziai').doc(id).set(m, {merge: true});
                         }
                     })
             }
         },
 
         deleteKadastras: async(k:FirebaseKadastras) => {
-            return await firestore().collection("Kadastrai").doc(k.id).delete().then(function() {
+            const userId = auth().currentUser?.uid;
+            return await firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(k.id).delete().then(function() {
                 return true;
             }).catch(function(error) {
                 return false;
             });
         },
         deleteSklypas: async(s:FirebaseSklypas,kadastroId:string) => {
-            return await firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(s.id).delete().then(function() {
+            const userId = auth().currentUser?.uid;
+            return await firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(s.id).delete().then(function() {
                 return true;
             }).catch(function(error) {
                 return false;
             });
         },
         deleteBarelis: async (b:FirebaseBarelis,kadastroId:string, sklypoId:string) => {
-            return await firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection("Bareliai").doc(b.id).delete().then(function() {
+            const userId = auth().currentUser?.uid;
+            return await firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection("Bareliai").doc(b.id).delete().then(function() {
                 return true;
             }).catch(function(error) {
                 return false;
             });
         },
         deleteMedis: async (m:FirebaseMedis,kadastroId:string, sklypoId:string, barelioId:string) => {
-            return await firestore().collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection("Bareliai").doc(barelioId).collection("Medziai").doc(m.id).delete().then(function() {
+            const userId = auth().currentUser?.uid;
+            return await firestore().collection("UserCollections").doc(userId).collection("Kadastrai").doc(kadastroId).collection("Sklypai").doc(sklypoId).collection("Bareliai").doc(barelioId).collection("Medziai").doc(m.id).delete().then(function() {
                 return true;
             }).catch(function(error) {
                 return false;

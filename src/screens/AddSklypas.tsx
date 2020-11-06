@@ -20,7 +20,6 @@ export default class AddSklypas extends React.Component<Props> {
         firebaseKadastras: {
             id:'',
             kadastras: {
-                vartotojoID:'',
                 kadastrinisNr:'',
                 adresas:'',
                 data:'',
@@ -29,7 +28,6 @@ export default class AddSklypas extends React.Component<Props> {
         sklypas: 
             {
                 sklypoNr:'',
-                plotas:1,
             }, 
         errorMsg: '',
     }
@@ -81,7 +79,7 @@ export default class AddSklypas extends React.Component<Props> {
                             autoCapitalize="none" 
                             placeholder="Plotas hektarais"
                             onChangeText={plotas => this.setState( prevState => ({ sklypas: {...this.state.sklypas, plotas: plotas} })) }
-                            value={this.state.sklypas.plotas.toString()}
+                            value={this.state.sklypas.plotas?.toString()}
                         />
                     </View>
                     <View style={styles.middle}>

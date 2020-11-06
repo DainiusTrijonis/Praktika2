@@ -16,7 +16,6 @@ export default class AddKadastras extends React.Component<Props> {
     state: AppState = {
         kadastras: 
             {
-                vartotojoID : '',
                 kadastrinisNr : '',
                 adresas : '',
                 data : ''

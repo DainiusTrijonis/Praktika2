@@ -21,7 +21,6 @@ export default class AddBarelis extends React.Component<Props> {
         firebaseKadastras: {
             id:'',
             kadastras: {
-                vartotojoID:'',
                 kadastrinisNr:'',
                 adresas:'',
                 data:'',
@@ -38,7 +37,6 @@ export default class AddBarelis extends React.Component<Props> {
  
         barelis:{
             barelioNr:'',
-            plotas:0,
         },
         errorMsg: '',
     }
@@ -93,7 +91,7 @@ export default class AddBarelis extends React.Component<Props> {
                             autoCapitalize="none" 
                             placeholder="Plotas arais"
                             onChangeText={plotas => this.setState( prevState => ({ barelis: {...this.state.barelis, plotas: plotas} })) }
-                            value={this.state.barelis.plotas.toString()}
+                            value={this.state.barelis.plotas?.toString()}
                         />
                     </View>
                     <View style={styles.middle}>
