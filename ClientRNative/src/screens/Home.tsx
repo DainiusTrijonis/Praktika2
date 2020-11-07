@@ -7,7 +7,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
- 
+import functions from '@react-native-firebase/functions'
 import SplashScreen from 'react-native-splash-screen';
 
 let unsubscribe: any;
@@ -25,6 +25,9 @@ export default class Home extends React.Component<Props> {
   };
   componentDidMount = () => {
     SplashScreen.hide();
+    functions().httpsCallable('helloWorld')().then(response => {
+      console.log(response);
+    })
     unsubscribe = auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
