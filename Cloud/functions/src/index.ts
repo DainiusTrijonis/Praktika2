@@ -1,30 +1,41 @@
 import * as functions from 'firebase-functions';
-
+import * as admin from 'firebase-admin';
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
-// var admin = require("firebase-admin");
 
-// var serviceAccount = require("path/to/serviceAccountKey.json");
+const serviceAccount = require("../ServiceAccountKey.json");
 
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount)
-// });
+admin.initializeApp({
+ credential: admin.credential.cert(serviceAccount),
+});
 // const db = admin.firestore();
 
+
+// Set UID admin
 // const adminUid = 'TrRvF6ipu0eOIxTAot2guW5cyu63';
 // const additionalClaims ={
-//     adminAccount: true,
+//     admin: true,
 // };
+// admin.auth().setCustomUserClaims(adminUid, additionalClaims)
+//   .then(() => {
+//     functions.logger.info("Succesfully granted admin claims", {structuredData: true});
+//   })
+//   .catch((error:any) => {
+//     functions.logger.info("Failed to make admins", {structuredData: true});
+//   })
 
 // admin.auth().createCustomToken(adminUid, additionalClaims)
 // .then((customToken: any) => {
-//   console.log(customToken);
+//   functions.logger.info(customToken, {structuredData: true});
 // })
 // .catch((error:any) => {
 //   console.log('Error creating custom token:', error);
 // });
 
-export const helloWorld = functions.https.onRequest((request, response) => {
+exports.helloWorld = functions.https.onCall(() => {
   functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
+
+  return [
+    "HelloWorld",
+  ];
 });
