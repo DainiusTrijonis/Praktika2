@@ -14,6 +14,7 @@ let unsubscribe: any;
 export type AppState = {
   user: any;
   initializing: boolean;
+  adminUI: boolean;
 };
 interface Props {
   navigation: any;
@@ -22,22 +23,46 @@ export default class Home extends React.Component<Props> {
   state: AppState = {
     user: null,
     initializing: true,
+    adminUI: false,
   };
   componentDidMount = () => {
     SplashScreen.hide();
-    functions().httpsCallable('helloWorld')().then(response => {
-      console.log(response);
-    })
+
     unsubscribe = auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           user: user,
-          initializing: false,
         });
       } else {
         this.props.navigation.navigate('Login');
       }
     });
+    auth().currentUser?.getIdToken(true)
+      .then((idtoken) => {
+        if(idtoken) {
+          console.log("idtoken: " + idtoken)
+        }
+      })
+    auth().currentUser?.getIdTokenResult(true)
+      .then((idTokenResult) => {
+        if(!!idTokenResult.claims.admin) {
+          console.log("admin true");
+          this.setState({
+            adminUI: true,
+            initializing: false,
+          })
+        }
+        else {
+          console.log("admin false");
+          this.setState({
+            adminUI: false,
+            initializing: false,
+          })
+        }
+      })
+    // functions().httpsCallable('helloWorld')().then(response => {
+    //   console.log(response);
+    // })
   };
   componentWillUnmount() {
     unsubscribe();
@@ -72,8 +97,21 @@ export default class Home extends React.Component<Props> {
               onPress={() => this.props.navigation.navigate('Kadastrai')}>
               <Text>Kadastrai</Text>
             </TouchableOpacity>
+            {
+              (() => {
+                  if (this.state.adminUI)
+                      return (
+                        <TouchableOpacity
+                          style={styles.button}
+                          onPress={() => this.props.navigation.navigate('AdminPanel')}>
+                          <Text>AdminPanel</Text>
+                        </TouchableOpacity>
+                      )
+              })()
+            }
           </View>
         </SafeAreaView>
+
       );
     } else if (!this.state.initializing && this.state.user == null) {
       this.props.navigation.navigate('Login');
