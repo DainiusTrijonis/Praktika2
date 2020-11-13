@@ -10,32 +10,127 @@ admin.initializeApp({
 });
 // const db = admin.firestore();
 
+// admin.auth().setCustomUserClaims('LFi8bIFTUkdNgVsRTaJ8ZOQxrPD3', {admin: true}).then(() => {
+//   console.log("Success");
+// }).catch((error)=>{console.log(error)});
 
-// Set UID admin
-// const adminUid = 'TrRvF6ipu0eOIxTAot2guW5cyu63';
-// const additionalClaims ={
-//     admin: true,
-// };
-// admin.auth().setCustomUserClaims(adminUid, additionalClaims)
-//   .then(() => {
-//     functions.logger.info("Succesfully granted admin claims", {structuredData: true});
-//   })
-//   .catch((error:any) => {
-//     functions.logger.info("Failed to make admins", {structuredData: true});
-//   })
 
-// admin.auth().createCustomToken(adminUid, additionalClaims)
-// .then((customToken: any) => {
-//   functions.logger.info(customToken, {structuredData: true});
-// })
-// .catch((error:any) => {
-//   console.log('Error creating custom token:', error);
-// });
-
-exports.helloWorld = functions.https.onCall(() => {
-  functions.logger.info("Hello logs!", {structuredData: true});
-
-  return [
-    "HelloWorld",
-  ];
+exports.grantAdminOnCreate = functions.auth.user().onCreate((user) => {
+  admin.auth().setCustomUserClaims(user.uid, {admin: false, premium: false}).then(()=>{
+    console.log("successfully added custom claims");
+    admin.auth().getUser(user.uid).then((userRecord) => {
+      // The claims can be accessed on the user record.
+      if(userRecord.customClaims)
+      console.log(userRecord.customClaims['admin']);
+    }).catch((error)=>{console.log(error)});
+  }).catch((error) =>{
+    console.log("failed to add custom claims",error);
+  })
 });
+
+exports.getUsers = functions.https.onCall((token:string) => {
+  return admin.auth().verifyIdToken(token).then((claims) => {
+    if(claims.admin === true) {
+      return admin.auth().listUsers(1000)
+        .then(function(listUsersResult) {
+          return [
+            listUsersResult.users,
+          ];
+        })
+        .catch(function(error) {
+          return [
+            "Error listing users: " + error,
+          ];
+        });
+    }
+    else {
+      return[
+        "Error claims: Not admin!",
+      ];
+    }
+
+  }).catch((error) => {
+    return[
+      "Error verify token:" + error,
+    ];
+  });
+});
+exports.updateUserPassword = functions.https.onCall((data) => {
+  return admin.auth().verifyIdToken(data['idToken']).then((claims) => {
+    if(claims.admin === true) {
+      return admin.auth().updateUser(data['uid'],data['password']).then(function(userRecords) {
+        console.log("successfully updated user record:",data['uid']);
+        return[
+          "successfully updated user record:",data['uid'],
+        ]
+      }).catch((error) =>{
+        return[
+          "Error updating user: ",error,
+        ]
+      });
+    }
+    else {
+      return[
+        "Error claims: Not admin!",
+      ];
+    }
+  }).catch((error) =>{
+      return[
+        "Error verify token:" + error,
+      ];
+    });
+});
+
+exports.deleteUser = functions.https.onCall((data) => {
+  return admin.auth().verifyIdToken(data['idToken']).then((claims) => {
+    if(claims.admin === true) {
+      return admin.auth().deleteUser(data['uid']).then(function() {
+        console.log("successfully deleted user record:",data['uid']);
+        return[
+          "successfully deleted user record:",data['uid'],
+        ]
+      }).catch((error) =>{
+        return[
+          "Error deleting user: ",error,
+        ]
+      });
+    }
+    else {
+      return[
+        "Error claims: Not admin!",
+      ];
+    }
+  }).catch((error) =>{
+      return[
+        "Error verify token:" + error,
+      ];
+    });
+});
+exports.changeAccessStatus = functions.https.onCall((data) => {
+  return admin.auth().verifyIdToken(data['idToken']).then((claims) => {
+    if(claims.admin === true) {
+      return admin.auth().setCustomUserClaims(data['uid'],data['customClaims']).then(function(userRecords) {
+        console.log("successfully updated user record:",userRecords);
+        return[
+          "successfully updated user record:",data['uid'],
+        ]
+      }).catch((error) =>{
+        return[
+          "Error updating user: ",error,
+        ]
+      });
+    }
+    else {
+      return[
+        "Error claims: Not admin!",
+      ];
+    }
+  }).catch((error) =>{
+      return[
+        "Error verify token:" + error,
+      ];
+    });
+});
+
+
+

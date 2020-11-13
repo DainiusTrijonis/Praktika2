@@ -21,6 +21,10 @@ import AddBarelis from './src/screens/AddBarelis'
 import MedziaiScreen from './src/screens/Medziai'
 import AddMedis from './src/screens/AddMedis'
 
+import AdminPanelScreen from './src/screens/AdminPanel/AdminPanel'
+
+import CustomersScreen from './src/screens/AdminPanel/AdminPanelChildScreens/Customers'
+import CustomerScreen from './src/screens/AdminPanel/AdminPanelChildScreens/Customer'
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -42,6 +46,21 @@ export default function App() {
               component={RegisterScreen} 
               options= {{ title: 'Registracija', headerShown: false}}
               
+          />
+         <Stack.Screen 
+              name="AdminPanel" 
+              component={AdminPanelScreen}
+              options= {{ title: 'Administracijos panelė', headerShown: true}}
+          />
+          <Stack.Screen 
+              name="Customers" 
+              component={CustomersScreen}
+              options= {{ title: 'Vartotojai', headerShown: true}}
+          />
+          <Stack.Screen 
+              name="Customer" 
+              component={CustomerScreen}
+              options= {{ title: 'Vartotojas', headerShown: true}}
           />
           <Stack.Screen 
               name="Kadastrai" 

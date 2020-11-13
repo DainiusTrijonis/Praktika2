@@ -7,14 +7,15 @@ import {
   SafeAreaView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import functions from '@react-native-firebase/functions'
 import SplashScreen from 'react-native-splash-screen';
+
 
 let unsubscribe: any;
 export type AppState = {
   user: any;
   initializing: boolean;
   adminUI: boolean;
+  kadastraiUI: boolean;
 };
 interface Props {
   navigation: any;
@@ -24,6 +25,7 @@ export default class Home extends React.Component<Props> {
     user: null,
     initializing: true,
     adminUI: false,
+    kadastraiUI: false,
   };
   componentDidMount = () => {
     SplashScreen.hide();
@@ -45,24 +47,32 @@ export default class Home extends React.Component<Props> {
       })
     auth().currentUser?.getIdTokenResult(true)
       .then((idTokenResult) => {
+        console.log(idTokenResult.claims)
         if(!!idTokenResult.claims.admin) {
-          console.log("admin true");
+          console.log("admin true and premium");
           this.setState({
             adminUI: true,
+            kadastraiUI:true,
+            initializing: false,
+          })
+        }
+        else if (!idTokenResult.claims.admin && !!idTokenResult.claims.premium) {
+          console.log("admin false and premium true");
+          this.setState({
+            adminUI: false,
+            kadastraiUI: true,
             initializing: false,
           })
         }
         else {
-          console.log("admin false");
+          console.log("admin false and premium false");
           this.setState({
             adminUI: false,
+            kadastraiUI: false,
             initializing: false,
           })
         }
       })
-    // functions().httpsCallable('helloWorld')().then(response => {
-    //   console.log(response);
-    // })
   };
   componentWillUnmount() {
     unsubscribe();
@@ -92,11 +102,18 @@ export default class Home extends React.Component<Props> {
               onPress={() => this.logOut()}>
               <Text>Atsijungti</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.props.navigation.navigate('Kadastrai')}>
-              <Text>Kadastrai</Text>
-            </TouchableOpacity>
+            {
+              (() => {
+                  if (this.state.kadastraiUI)
+                      return (
+                        <TouchableOpacity
+                          style={styles.button}
+                          onPress={() => this.props.navigation.navigate('Kadastrai')}>
+                          <Text>Kadastrai</Text>
+                        </TouchableOpacity>
+                      )
+              })()
+            }
             {
               (() => {
                   if (this.state.adminUI)

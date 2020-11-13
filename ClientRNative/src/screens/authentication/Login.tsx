@@ -17,7 +17,6 @@ export default class Login extends React.Component<Props> {
         email: '',
         password: '',
         errorMsg: '',
-        
     } 
     emailText: any;
     passwordText: any;
